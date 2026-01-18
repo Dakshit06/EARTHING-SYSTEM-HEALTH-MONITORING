@@ -2,8 +2,7 @@
 
 A smart IoT-based system to monitor the effectiveness of electrical earthing (grounding) in real-time. This project uses an ESP32 to measure **Soil Moisture** and **Leakage Voltage**, hosting a premium web dashboard for monitoring.
 
-![Project Dashboard](https://github.com/Dakshit06/EARTHING-SYSTEM-HEALTH-MONITORING/assets/placeholder-image.png)
-*(Replace with actual screenshot if available)*
+![Project Dashboard](dashboard_preview.png)
 
 ## 🚀 Features
 - **Real-Time Monitoring**: Live visualization of Soil Moisture (%) and Leakage Voltage (V).
