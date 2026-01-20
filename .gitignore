@@ -1,0 +1,55 @@
+# Arduino/ESP32
+*.bin
+*.elf
+*.hex
+*.map
+*.lst
+
+# Build directories
+build/
+.build/
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Antigravity brain files (local AI assistant artifacts)
+.gemini/
+
+# Zencoder files
+.zencoder/
+.zenflow/
+
+# Test files (keep in repo but ignore outputs)
+test_output/
+*.test
+
+# Backup files
+*.ino.bak
+*.cpp.bak
+*.h.bak

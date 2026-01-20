@@ -6,14 +6,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const valVoltage = document.getElementById('val-voltage');
     const barVoltage = document.getElementById('bar-voltage');
-    const cardVoltage = document.getElementById('card-voltage'); // Fixed ID reference
+    const cardVoltage = document.getElementById('card-voltage');
 
+    const statusHero = document.getElementById('status-hero');
     const mainStatusRing = document.getElementById('main-status-ring');
     const mainStatusIcon = document.getElementById('main-status-icon');
     const mainStatusTitle = document.getElementById('main-status-title');
     const mainStatusDesc = document.getElementById('main-status-desc');
     const statusBadgeText = document.getElementById('header-status-text');
     const statusDot = document.querySelector('.status-dot');
+
+    // Alert indicators
+    const redLedIndicator = document.getElementById('red-led-indicator');
+    const buzzerIndicator = document.getElementById('buzzer-indicator');
+    const alertIndicators = document.getElementById('alert-indicators');
 
     const clockElement = document.getElementById('clock');
 
@@ -24,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         data: {
             labels: Array(20).fill(''),
             datasets: [{
-                label: 'Leakage Voltage (V)',
+                label: 'AC Voltage (V)',
                 data: Array(20).fill(0),
                 borderColor: '#3b82f6',
                 backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -64,21 +70,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // === Simulation State ===
-    // We will simulate values that drift around the "Good" range but occasionally spike to "Bad" for demo purposes.
-    let moisture = 35;
-    let voltage = 2.58;
-    let tickCount = 0;
-
-
-    // === Logic Constants ===
-    const SOIL_THRESHOLD = 25;
-    const VOLT_MIN = 2.55;
-    const VOLT_MAX = 2.61;
+    // === Logic Constants (matching Arduino code) ===
+    const SOIL_THRESHOLD = 25;      // moisturePercent >= 25
+    const VOLT_MIN = 2.55;          // acVoltage >= 2.55
+    const VOLT_MAX = 2.61;          // acVoltage <= 2.61
 
     function updateClock() {
         const now = new Date();
         clockElement.textContent = now.toLocaleTimeString();
+    }
+
+    // Check earthing status based on Arduino logic
+    function checkEarthingStatus(moisture, voltage) {
+        // EARTHING LOGIC from Arduino:
+        // earthingGood = (moisturePercent >= 25 && acVoltage >= 2.55 && acVoltage <= 2.61)
+        const soilGood = moisture >= SOIL_THRESHOLD;
+        const voltGood = voltage >= VOLT_MIN && voltage <= VOLT_MAX;
+        const earthingGood = soilGood && voltGood;
+        
+        return { earthingGood, soilGood, voltGood };
     }
 
     async function fetchData() {
@@ -87,9 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
 
-            // Expected JSON: { "moisture": 45, "voltage": 2.58, "soilRaw": 12000, "voltRaw": 2200, "soilGood": true, "voltGood": true }
-
-            updateDashboard(data.moisture, data.voltage, data.soilGood, data.voltGood);
+            // Expected JSON: { "moisture": 45, "voltage": 2.58 }
+            const { earthingGood, soilGood, voltGood } = checkEarthingStatus(data.moisture, data.voltage);
+            
+            updateDashboard(data.moisture, data.voltage, earthingGood, soilGood, voltGood);
 
             // Update connection status
             statusBadgeText.textContent = 'CONNECTED';
@@ -105,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function updateDashboard(moistureVal, voltageVal, isSoilGood, isVoltGood) {
+    function updateDashboard(moistureVal, voltageVal, earthingGood, isSoilGood, isVoltGood) {
         // Round values
         const dispMoisture = Math.round(moistureVal);
         const dispVoltage = voltageVal.toFixed(2);
@@ -117,62 +128,75 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update Bars
         barSoil.style.width = `${dispMoisture}%`;
 
-        const voltPercent = Math.min(100, (voltageVal / 3.3) * 100);
+        // Voltage bar scaled to show position within range
+        const voltPercent = Math.min(100, Math.max(0, ((voltageVal - 2.0) / 1.0) * 100));
         barVoltage.style.width = `${voltPercent}%`;
 
-        // Check Status Logic
-        const isSystemSafe = isSoilGood && isVoltGood;
-
-        updateStatusUI(isSystemSafe, isSoilGood, isVoltGood);
-        updateChart(voltageVal, isSystemSafe);
+        updateStatusUI(earthingGood, isSoilGood, isVoltGood);
+        updateChart(voltageVal, earthingGood);
     }
 
-    function updateStatusUI(safe, soilGood, voltGood) {
-        if (safe) {
-            // Main Status
+    function updateStatusUI(earthingGood, soilGood, voltGood) {
+        if (earthingGood) {
+            // EARTHING GOOD - matches Arduino display
             mainStatusRing.className = 'status-ring safe';
             mainStatusIcon.className = 'fa-solid fa-check-circle';
-            mainStatusTitle.textContent = 'System Safe';
-            mainStatusDesc.textContent = 'Grounding effective. No leakage detected.';
+            mainStatusTitle.textContent = 'STATUS:';
+            mainStatusDesc.textContent = 'EARTHING GOOD';
+            mainStatusDesc.className = 'status-label good';
+            
+            // Hide alert indicators when earthing is good
+            alertIndicators.classList.remove('active');
+            redLedIndicator.classList.remove('on');
+            buzzerIndicator.classList.remove('on');
+            statusHero.classList.remove('alert-mode');
         } else {
-            // Main Status
+            // EARTHING BAD - matches Arduino display (ALERT!)
             mainStatusRing.className = 'status-ring danger';
             mainStatusIcon.className = 'fa-solid fa-triangle-exclamation';
-            mainStatusTitle.textContent = 'Check Earthing';
-
-            let issues = [];
-            if (!soilGood) issues.push("Low Moisture");
-            if (!voltGood) issues.push("Voltage Leak");
-            mainStatusDesc.textContent = `Alert: ${issues.join(' & ')}`;
+            mainStatusTitle.textContent = 'ALERT!';
+            mainStatusDesc.textContent = 'EARTHING BAD';
+            mainStatusDesc.className = 'status-label bad';
+            
+            // Show alert indicators (RED LED + BUZZER active)
+            alertIndicators.classList.add('active');
+            redLedIndicator.classList.add('on');
+            buzzerIndicator.classList.add('on');
+            statusHero.classList.add('alert-mode');
         }
 
-        // Card Highlights
+        // Card Highlights for Soil
         if (soilGood) {
             valSoil.style.color = 'var(--accent-success)';
             barSoil.style.backgroundColor = 'var(--accent-success)';
+            cardSoil.classList.remove('warning');
         } else {
             valSoil.style.color = 'var(--accent-warning)';
             barSoil.style.backgroundColor = 'var(--accent-warning)';
+            cardSoil.classList.add('warning');
         }
 
+        // Card Highlights for Voltage
         if (voltGood) {
             valVoltage.style.color = 'var(--accent-success)';
             barVoltage.style.backgroundColor = 'var(--accent-success)';
+            cardVoltage.classList.remove('danger');
         } else {
             valVoltage.style.color = 'var(--accent-danger)';
             barVoltage.style.backgroundColor = 'var(--accent-danger)';
+            cardVoltage.classList.add('danger');
         }
     }
 
-    function updateChart(newVolt, isSafe) {
+    function updateChart(newVolt, earthingGood) {
         // Push new data
         const data = voltageChart.data.datasets[0].data;
         data.shift();
         data.push(newVolt);
 
-        // Dynamic color for chart line based on safety
-        voltageChart.data.datasets[0].borderColor = isSafe ? '#10b981' : '#ef4444';
-        voltageChart.data.datasets[0].backgroundColor = isSafe ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)';
+        // Dynamic color for chart line based on earthing status
+        voltageChart.data.datasets[0].borderColor = earthingGood ? '#10b981' : '#ef4444';
+        voltageChart.data.datasets[0].backgroundColor = earthingGood ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)';
 
         voltageChart.update();
     }
