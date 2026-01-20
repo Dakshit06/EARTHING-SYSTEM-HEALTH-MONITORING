@@ -328,6 +328,21 @@ For issues and questions:
 - OLED display
 - Alert system
 
+
+## 📸 Gallery
+
+### Circuit Diagrams & Schematics
+![Original Circuit Diagram](./images/circuit_diagrams/circuit_diagram_original.png)
+
+### Screenshots
+![Dashboard Capture 1](./images/screenshots/screencapture-192-168-4-1-2026-01-20-16_48_50.png)
+![Dashboard Capture 2](./images/screenshots/screencapture-192-168-4-1-2026-01-20-16_49_54.png)
+
+### Project Photos & Miscellaneous
+![Project Image 1](./images/misc/image.png)
+![Project Image 2](./images/misc/image%20copy.png)
+![Project Image 3](./images/misc/image%20copy%202.png)
+
 ---
 
 **⭐ If you find this project useful, please star the repository!**
