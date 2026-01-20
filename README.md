@@ -1,6 +1,6 @@
 # ESP32 Earthing System Health Monitor
 
-![Project Banner](./Professional_IoT_Circuit_Schematic.png)
+![Project Banner](./images/circuit_diagrams/Professional_IoT_Circuit_Schematic.png)
 
 ## 🌟 Overview
 
@@ -18,7 +18,7 @@ A real-time IoT-based earthing monitoring system using ESP32 microcontroller tha
 
 ## 📊 System Architecture
 
-![System Architecture](./IoT_System_Architecture.png)
+![System Architecture](./images/circuit_diagrams/IoT_System_Architecture.png)
 
 ## 🔧 Hardware Components
 
@@ -56,7 +56,7 @@ Detailed pin configuration: [ESP32_PIN_CONFIGURATION.md](./ESP32_PIN_CONFIGURATI
 
 ## 🔌 Circuit Diagram
 
-![Complete Circuit](./Complete_Circuit_Diagram.png)
+![Complete Circuit](./images/circuit_diagrams/Complete_Circuit_Diagram.png)
 
 ## 🚀 Quick Start
 
@@ -94,7 +94,7 @@ Detailed pin configuration: [ESP32_PIN_CONFIGURATION.md](./ESP32_PIN_CONFIGURATI
    - Partition Scheme: Default
 
 4. **Upload Code**
-   - Open `ESP32_Earthing_WebServer.ino`
+   - Open `src/ESP32_Earthing_WebServer.ino`
    - Click Upload (Ctrl+U)
 
 ## 📱 Usage
@@ -115,7 +115,7 @@ Detailed pin configuration: [ESP32_PIN_CONFIGURATION.md](./ESP32_PIN_CONFIGURATI
 
 ### Dashboard Features
 
-![Dashboard Preview](./screencapture-192-168-4-1-2026-01-20-16_48_50.png)
+![Dashboard Preview](./images/screenshots/dashboard.png)
 
 - ✅ Real-time soil moisture percentage
 - ✅ AC voltage readings
@@ -149,7 +149,7 @@ const char* password = "12345678";
 
 ```
 earthingproject/
-├── ESP32_Earthing_WebServer.ino       # Main code (v3.0)
+├── src/ESP32_Earthing_WebServer.ino       # Main code (v3.0)
 ├── ESP32_Earthing_WebServer_OFFLINE.ino # Alternative offline version
 ├── mock_server.py                      # Python test server
 ├── README.md                           # This file
@@ -335,3 +335,4 @@ For issues and questions:
 ![Made with ESP32](https://img.shields.io/badge/Made%20with-ESP32-blue)
 ![Arduino](https://img.shields.io/badge/Arduino-Compatible-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
+
