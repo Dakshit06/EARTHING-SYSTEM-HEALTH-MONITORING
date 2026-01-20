@@ -52,7 +52,7 @@ Indicators:
 └── Red LED: GPIO 14
 ```
 
-Detailed pin configuration: [ESP32_PIN_CONFIGURATION.md](./ESP32_PIN_CONFIGURATION.md)
+Detailed pin configuration: [ESP32_PIN_CONFIGURATION.md](./docs/ESP32_PIN_CONFIGURATION.md)
 
 ## 🔌 Circuit Diagram
 
@@ -115,7 +115,7 @@ Detailed pin configuration: [ESP32_PIN_CONFIGURATION.md](./ESP32_PIN_CONFIGURATI
 
 ### Dashboard Features
 
-![Dashboard Preview](./images/screenshots/dashboard.png)
+![Dashboard Preview](./images/screenshots/dashboard_preview.png)
 
 - ✅ Real-time soil moisture percentage
 - ✅ AC voltage readings
@@ -308,7 +308,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 For issues and questions:
 - Open an [Issue](https://github.com/Dakshit06/EARTHING-SYSTEM-HEALTH-MONITORING/issues)
 - Check [Troubleshooting](#-troubleshooting) section
-- Review [Project Documentation](./Project_Details_Proposal.pdf)
+- Review [Project Documentation](./docs/Project_Details_Proposal.pdf)
 
 ## 🔄 Version History
 
