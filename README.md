@@ -15,6 +15,32 @@ A real-time IoT-based earthing monitoring system using ESP32 microcontroller tha
 - **Dual-Core Processing**: ESP32's dual cores ensure responsive web server
 - **Offline Operation**: Works completely offline in Access Point mode
 - **Auto-Calibration**: Configurable voltage and moisture thresholds
+- **🆕 Terraform Infrastructure**: Automated Google Cloud infrastructure deployment
+
+## ☁️ Google Cloud Infrastructure (NEW!)
+
+This project now includes **Terraform configuration** for automated deployment of Google Cloud infrastructure! 
+
+Deploy a complete networking environment with:
+- ✅ Auto mode VPC network with subnetworks in every region
+- ✅ Firewall rules for HTTP, SSH, RDP, and ICMP
+- ✅ Two VM instances in different regions
+- ✅ Fully automated with Infrastructure as Code
+
+### Quick Start with Terraform
+
+```bash
+# Navigate to the Terraform directory
+cd tfinfra
+
+# Initialize and deploy
+terraform init
+terraform apply
+```
+
+**📖 Detailed Instructions**: See [tfinfra/QUICKSTART.md](./tfinfra/QUICKSTART.md) for step-by-step guidance.
+
+**❗ Important**: Always run Terraform commands from inside the `tfinfra` directory to avoid "No configuration files" errors!
 
 ## 📊 System Architecture
 
@@ -156,6 +182,15 @@ earthingproject/
 ├── ESP32_PIN_CONFIGURATION.md          # Detailed pin guide
 ├── SOIL_SENSOR_GUIDE.md               # Sensor calibration guide
 ├── Project_Details_Proposal.pdf        # Project documentation
+├── tfinfra/                            # Terraform infrastructure (NEW!)
+│   ├── provider.tf                    # Google Cloud provider config
+│   ├── mynetwork.tf                   # Network, firewall, and VMs
+│   ├── instance/                      # Reusable VM module
+│   │   ├── main.tf                   # VM instance definition
+│   │   └── variables.tf              # Module variables
+│   ├── setup.sh                       # Quick setup script
+│   ├── QUICKSTART.md                  # Quick start guide
+│   └── README.md                      # Detailed Terraform docs
 ├── images/
 │   ├── Complete_Circuit_Diagram.png
 │   ├── IoT_System_Architecture.png
