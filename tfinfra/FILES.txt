@@ -1,0 +1,100 @@
+═══════════════════════════════════════════════════════════════
+                    TERRAFORM FILES DIRECTORY
+═══════════════════════════════════════════════════════════════
+
+📁 LOCATION: tfinfra/
+
+🚀 QUICK START (3 Commands):
+   $ cd tfinfra
+   $ terraform init
+   $ terraform apply
+
+═══════════════════════════════════════════════════════════════
+
+📚 DOCUMENTATION FILES (Choose based on your need):
+
+┌─────────────────────────────────────────────────────────────┐
+│ FILE                    │ PURPOSE                           │
+├─────────────────────────────────────────────────────────────┤
+│ START_HERE.txt          │ Read this FIRST! 3-cmd solution   │
+│ INDEX.md                │ Guide to all guides               │
+│ STEP_BY_STEP.md         │ ⭐ Main solution with details    │
+│ VISUAL_GUIDE.md         │ ASCII diagrams & visualizations   │
+│ QUICKSTART.md           │ Fast deployment guide             │
+│ SOLUTION.md             │ Error resolution & troubleshoot   │
+│ README.md               │ Complete reference docs           │
+│ ARCHITECTURE.md         │ Technical architecture details    │
+│ setup.sh                │ Automated setup script            │
+│ FILES.txt               │ This file - directory listing     │
+└─────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════
+
+⚙️  TERRAFORM CONFIGURATION FILES:
+
+┌─────────────────────────────────────────────────────────────┐
+│ FILE                    │ PURPOSE                           │
+├─────────────────────────────────────────────────────────────┤
+│ provider.tf             │ Google Cloud provider config      │
+│ mynetwork.tf            │ VPC network, firewall, VMs        │
+│ instance/main.tf        │ Reusable VM instance module       │
+│ instance/variables.tf   │ Module input variables            │
+└─────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════
+
+💡 WHICH FILE SHOULD YOU READ?
+
+Use Case                           → Recommended File
+────────────────────────────────────────────────────────────────
+Need fix NOW                       → START_HERE.txt
+Detailed walkthrough               → STEP_BY_STEP.md
+Visual learner                     → VISUAL_GUIDE.md
+Experienced user                   → QUICKSTART.md
+Something not working              → SOLUTION.md
+Want all details                   → README.md
+Understand architecture            → ARCHITECTURE.md
+Not sure which to read             → INDEX.md
+
+═══════════════════════════════════════════════════════════════
+
+📦 WHAT GETS CREATED:
+
+When you run 'terraform apply', these resources are created:
+
+1. VPC Network (mynetwork)
+   - Auto mode with subnetworks in all GCP regions
+
+2. Firewall Rule (mynetwork-allow-http-ssh-rdp-icmp)
+   - Allows: HTTP (80), SSH (22), RDP (3389), ICMP (ping)
+
+3. VM Instance: mynet-vm-1
+   - Location: us-east1-b
+   - Type: e2-micro
+   - OS: Debian 11
+
+4. VM Instance: mynet-vm-2
+   - Location: europe-west1-d
+   - Type: e2-micro
+   - OS: Debian 11
+
+═══════════════════════════════════════════════════════════════
+
+✨ TOTAL FILES: 14
+   - 10 Documentation files
+   - 4 Terraform configuration files
+
+═══════════════════════════════════════════════════════════════
+
+🎯 RECOMMENDED READING ORDER:
+
+1. START_HERE.txt        (30 seconds)
+2. STEP_BY_STEP.md       (5 minutes)
+3. Deploy with terraform (3 minutes)
+4. VISUAL_GUIDE.md       (Optional)
+5. ARCHITECTURE.md       (Optional)
+
+═══════════════════════════════════════════════════════════════
+
+Last Updated: February 2026
+Part of: Earthing System Health Monitoring Project
