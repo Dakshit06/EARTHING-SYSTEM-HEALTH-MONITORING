@@ -2,6 +2,21 @@
 
 This directory contains Terraform configuration files to automate the deployment of Google Cloud infrastructure for the Earthing System Health Monitoring project.
 
+## 🚨 Got "Error: No configuration files"?
+
+**→ Read [STEP_BY_STEP.md](STEP_BY_STEP.md) for the solution!**
+
+**Quick fix:** You need to run `cd tfinfra` first before running Terraform commands.
+
+## 📚 Documentation Quick Links
+
+- **[STEP_BY_STEP.md](STEP_BY_STEP.md)** - ⭐ **START HERE!** Copy-paste commands to fix the error
+- **[VISUAL_GUIDE.md](VISUAL_GUIDE.md)** - Visual diagrams showing the problem and solution
+- **[QUICKSTART.md](QUICKSTART.md)** - Quick deployment walkthrough
+- **[SOLUTION.md](SOLUTION.md)** - Direct answer to common errors
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Infrastructure topology and diagrams
+- **[setup.sh](setup.sh)** - Automated setup script
+
 ## Overview
 
 This Terraform configuration deploys:
