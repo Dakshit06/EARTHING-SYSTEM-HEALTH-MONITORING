@@ -18,6 +18,8 @@ resource "google_compute_firewall" "mynetwork-allow-http-ssh-rdp-icmp" {
     protocol = "icmp"
   }
 
+  # Note: This allows traffic from any IP (0.0.0.0/0) for lab purposes.
+  # In production, restrict this to specific IP ranges for better security.
   source_ranges = ["0.0.0.0/0"]
 }
 
